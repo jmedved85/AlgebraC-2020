@@ -7,6 +7,7 @@ namespace drugi
         static void Main(string[] args)
         {
             Console.WriteLine("Drugi Hello World!");
+            Console.ReadKey();
         }
     }
 }
