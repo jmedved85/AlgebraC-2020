@@ -52,6 +52,8 @@ namespace _01_domaci_zadatak
             Console.WriteLine("Kvocijent je: {0}", (float)prvi_broj / (float)drugi_broj);
             Console.WriteLine("Pritisnite \"ENTER\" za kraj");
             Console.ReadKey();
+
+            // Jasmin Medved
         }
     }
 }
