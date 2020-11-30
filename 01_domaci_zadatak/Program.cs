@@ -49,7 +49,7 @@ namespace _01_domaci_zadatak
             Console.Write("Molimo unesite drugi broj: ");
             drugi_broj = int.Parse(Console.ReadLine());
             Console.WriteLine("Umnozak je: {0}", prvi_broj * drugi_broj);
-            Console.WriteLine("Kvocijent je: {0}", (decimal)prvi_broj / (decimal)drugi_broj);
+            Console.WriteLine("Kvocijent je: {0}", (float)prvi_broj / (float)drugi_broj);
             Console.WriteLine("Pritisnite \"ENTER\" za kraj");
             Console.ReadKey();
         }
