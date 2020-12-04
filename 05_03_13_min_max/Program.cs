@@ -16,7 +16,7 @@ namespace _05_03_13_min_max
             while (broj>0)
             {
                 ulazniBroj=int.Parse(Console.ReadLine());
-                if (ulazniBroj<minbroj)
+                if (ulazniBroj < minbroj)
                 {
                     minbroj = ulazniBroj;
                 }
@@ -27,6 +27,8 @@ namespace _05_03_13_min_max
                 broj--;
             }
             Console.WriteLine("Najmanji broj je {0}, a najveci je: {1}",minbroj,maxbroj);
+        
+        
         }
     }
 }

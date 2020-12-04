@@ -29,6 +29,7 @@ namespace _05_03_potencije_dva_do_1000
                 brojTisucu *= 2;
                 Console.WriteLine(brojTisucu + " ");
             }
+        
         }
     }
 }

@@ -27,6 +27,7 @@ namespace _05_03_par_nepar
             }
             Console.WriteLine("Parnih: {0}, neparnih:{1}", parnih,neparnih);
 
+        
         }
     }
 }

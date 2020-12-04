@@ -11,7 +11,7 @@ namespace _05_03_suma_prosjek
             
             int ulazniBroj = 0;
             int sumaBrojeva = 0;
-            int brojaBrojeva = 0;
+            int brojacBrojeva = 0;
             
             while (true) // Ovo je vrlo opasna petlja, moramo imati trigger
             {
@@ -21,9 +21,9 @@ namespace _05_03_suma_prosjek
                     break;
                 }
                 sumaBrojeva += ulazniBroj;
-                brojaBrojeva++;
+                brojacBrojeva++;
             }
-            Console.WriteLine("Suma je {0}, a prosjek {1:F3}",sumaBrojeva,(float)sumaBrojeva/brojaBrojeva);
+            Console.WriteLine("Suma je {0}, a prosjek {1:F3}",sumaBrojeva,(float)sumaBrojeva/brojacBrojeva);
         }
     }
 }

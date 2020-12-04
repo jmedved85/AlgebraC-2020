@@ -11,7 +11,7 @@ namespace _05_03_unos_ocjena
 
             int ulazniBroj = 0;
             int sumaBrojeva = 0;
-            int brojaBrojeva = 0;
+            int brojacBrojeva = 0;
 
             while (true) // Ovo je vrlo opasna petlja, moramo imati trigger
             {
@@ -22,15 +22,15 @@ namespace _05_03_unos_ocjena
                 }
                 if (ulazniBroj<2) {
                     Console.WriteLine("Uspjeh je nedovoljan!");
-                    brojaBrojeva = 0;
+                    brojacBrojeva = 0;
                     break;
                 }
                 sumaBrojeva += ulazniBroj;
-                brojaBrojeva++;
+                brojacBrojeva++;
             }
-            if (brojaBrojeva>0)
+            if (brojacBrojeva>0)
             {
-                Console.WriteLine("Prosjek ocjena je {0:F3}", (float)sumaBrojeva / brojaBrojeva);
+                Console.WriteLine("Prosjek ocjena je {0:F3}", (float)sumaBrojeva / brojacBrojeva);
             }
             
         }
