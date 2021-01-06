@@ -57,12 +57,12 @@ namespace cheatsheet
 
             foreach (var item in osobe_ve)
             {
-                Console.WriteLine("pronasli smo osobe na ve " + item);
+                Console.WriteLine("pronasli smo osobe na ve " + item);       
             }
 
             var osobe_na = (
             from tr_os      // postavimo ime varijable za svaki element kolekcije
-            in osobe.DefaultIfEmpty(new Osoba { Ime = "Jane", Prezime = "Doe" })        // kolekcija iz koje radimo pretragu
+            in osobe.DefaultIfEmpty(new Osoba { Ime = "Jane", Prezime = "Doe" })  // kolekcija iz koje radimo pretragu
             where tr_os.Ime.Contains("xa")  // filter
             select tr_os.Prezime   // selektiramo kompletan element
             ).ToList();
@@ -81,9 +81,10 @@ namespace cheatsheet
                 ).ToArray();
 
             Console.WriteLine("Ispis iz niza stringova");
+
             foreach (var item in niz_osobe_na)
             {
-                Console.WriteLine("Prezime osobe koja u imenu ima 'na'" + item);
+                Console.WriteLine("Prezime osobe koja u imenu ima 'na'" + item); 
             }
 
 
