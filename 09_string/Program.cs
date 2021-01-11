@@ -46,7 +46,7 @@ namespace _09_string
         }
         public static string Reverse(string s)
         {
-            char[] charArray = s.ToCharArray();
+            char[] charArray = s.ToCharArray(); 
             Array.Reverse(charArray);
             return new string(charArray);
         }
