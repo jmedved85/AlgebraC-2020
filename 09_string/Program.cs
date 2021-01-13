@@ -41,7 +41,7 @@ namespace _09_string
 
             // vraca ! 
             Console.WriteLine("12. slovo je " + txt[11]); //  
-            txt.
+        
 
         }
         public static string Reverse(string s)

@@ -11,11 +11,11 @@ namespace _14_Osoba_Zivotinja
         public int placa { get; internal set; }
         public Osoba Partner { get; internal set; }
 
-        ~Osoba()
-        {
-            Dispose(false);
-            Console.WriteLine("Objekt unisten");
-        }
+        //~Osoba()
+        //{
+        //    Dispose(false);
+        //    Console.WriteLine("Objekt unisten");
+        //}
 
         public Osoba()
         {
@@ -48,34 +48,32 @@ namespace _14_Osoba_Zivotinja
                 ,this.placa);
         }
 
-        private bool isDisposed = false;
+        //private bool isDisposed = false;
 
-        public void Dispose(bool disposing)
+        //public void Dispose(bool disposing)
 
-        {
+        //{
 
-            if (disposing)
+        //    if (disposing)
 
-            {
+        //    {
 
-                // Code to dispose the managed resources of the class
+        //        // Code to dispose the managed resources of the class
 
-            }
+        //    }
 
-            // Code to dispose the un-managed resources of the class
+        //    // Code to dispose the un-managed resources of the class
 
-            isDisposed = true;
+        //    isDisposed = true;
 
-        }
+        //}
 
         public void Dispose()
 
         {
-
-            Dispose(true);
-
-            GC.SuppressFinalize(this);
-
+            Partner = null;
+            Console.WriteLine("Partner je ošo ča");
+            
         }
 
         public int CompareTo(Osoba os)

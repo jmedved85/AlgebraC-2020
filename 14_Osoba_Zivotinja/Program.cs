@@ -63,7 +63,9 @@ namespace _14_Osoba_Zivotinja
             {
                 Ispis(item);
             }
-        
+
+            partner.Dispose();
+            
 
             Console.ReadKey();
 
@@ -74,5 +76,7 @@ namespace _14_Osoba_Zivotinja
             Console.WriteLine(klasaZaIspis.PunoIme());
 
         }
+
+        
     }
 }
