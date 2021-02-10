@@ -190,13 +190,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "14_Osoba_Zivotinja", "14_Os
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "alg-Racuni", "alg-Racuni", "{E5430C2F-BD59-4362-8D42-E43B8FD3CFD7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Racuni.Model", "Racuni.Model\Racuni.Model.csproj", "{4DA55188-2839-4726-AEA9-990B55F878EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Racuni.Model", "Racuni.Model\Racuni.Model.csproj", "{4DA55188-2839-4726-AEA9-990B55F878EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Racuni.UI", "Racuni.UI\Racuni.UI.csproj", "{CE479E32-3241-40C7-AF9F-08792ED61327}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Racuni.UI", "Racuni.UI\Racuni.UI.csproj", "{CE479E32-3241-40C7-AF9F-08792ED61327}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Model", "Model", "{384D7890-A539-4C70-A5A0-4F00581E5823}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "14_Osoba_Zivotinja", "14_Osoba_Zivotinja\14_Osoba_Zivotinja.csproj", "{FD9A35BB-7AFF-4AE3-9846-8DA14981B492}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
