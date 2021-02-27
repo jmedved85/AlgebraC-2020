@@ -16,7 +16,7 @@ namespace BazaPoklona.Models
         public int Id { get; set; }
         public string Naziv { get; set; }
 
-        public virtual ICollection<Poklon> Poklons { get; set; }
-        public virtual ICollection<Trgovina> Trgovinas { get; set; }
+        public virtual ICollection<Poklon> Poklons { get; set; } // kolekcija (lista) raznih poklona
+        public virtual ICollection<Trgovina> Trgovinas { get; set; } // kolekcija raznih trgovina
     }
 }

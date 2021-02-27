@@ -11,6 +11,8 @@ namespace BazaPoklona.Models
         public string Naziv { get; set; }
         public int VrstaRobe { get; set; }
         public bool Kupljen { get; set; }
+        public float Cijena { get; set; }
+
 
         public virtual VrstaRobe VrstaRobeNavigation { get; set; }
     }

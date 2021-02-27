@@ -26,6 +26,9 @@ namespace BazaPoklona
         {
             services.AddControllersWithViews();
 
+            services.AddDbContext<BazaPoklonaContext>(options => // Models.BazaPoklonaContext.cs
+            options.UseSqlServer(Configuration.GetConnectionString("BazaPoklonaContext"))); // appsettings.json
+
 
         }
 
