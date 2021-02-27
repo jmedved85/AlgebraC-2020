@@ -14,6 +14,7 @@ namespace BazaPoklona.Models
         public float Cijena { get; set; }
 
 
+        public float Cijena { get; set; }
         public virtual VrstaRobe VrstaRobeNavigation { get; set; }
     }
 }

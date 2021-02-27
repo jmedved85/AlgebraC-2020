@@ -19,9 +19,10 @@ namespace BazaPoklona.Controllers
         }
 
         // GET: Poklons
-        public async Task<IActionResult> Index() // povezuje se na bazu podataka, hvata tablicu Poklons iz bazepodataka context
+        public async Task<IActionResult> Index()
         {
-            var bazaPoklonaContext = _context.Poklons.Include(p => p.VrstaRobeNavigation); // include poveznicu na referencu druge baze podataka
+            var bazaPoklonaContext = _context.Poklons
+                .Include(p => p.VrstaRobeNavigation);
             return View(await bazaPoklonaContext.ToListAsync());
         }
 
@@ -101,16 +102,15 @@ namespace BazaPoklona.Controllers
                 return NotFound();
             }
 
-            // Postavi svojstvo kupljen
+            //Postavi svojstvo kupljen
             poklon.Kupljen = true;
-
-            // Spremi izmjenjeni objekt u bazu 
+            
+            // spremi izmjenjeni objekt u bazu
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Index"); // Kad preusmjerimo na akciju ona pošalje popunjenu listu na view Index
-            // return View("Index"); // ne mogu se vratiti na View bez Modela popunjenog poklonima
+            return RedirectToAction("Index");  // Kad preusmjerimo na akciju ona posalje popunjenu listu na view Index
+           // return View("Index");  // Ne mogu se vratiti na view bez Modela popunjenog Poklonima!!!!
         }
-
 
         // POST: Poklons/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.

@@ -28,20 +28,22 @@
 @foreach (var item in Model) {
     if (item.Kupljen == false)
     {
+
+
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Naziv)
             </td>
             <td>
-                @* @Html.DisplayFor(modelItem => item.Kupljen) *@
+                @*  @Html.DisplayFor(modelItem => item.Kupljen) *@
                 <form asp-controller="Poklons" asp-action="Kupljen" method="post">
-                    <input type="checkbox" name="id" value="@item.IdPoklon" onchange="this.form.submit()"/>
+                    <input type="checkbox" name="id" value="@item.IdPoklon" onchange="this.form.submit()" />
                 </form>
+
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.VrstaRobeNavigation.Naziv)
             </td>
-
             <td>
                 <a asp-action="Edit" asp-route-id="@item.IdPoklon">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.IdPoklon">Details</a> |

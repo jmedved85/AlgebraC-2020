@@ -23,33 +23,33 @@ namespace BazaPoklona.Controllers
         {
             return View(await _context.VrstaRobes.ToListAsync());
         }
+
         // GET: VrstaRobes
         public async Task<IActionResult> OstvareniPromet()
         {
 
-            // TODO Sredi Lambda expression
-            // ----------------------------
-            //var promet = await _context.Poklons
-            //    .GroupBy(x=>x.VrstaRobe)
-            //    //TODO podatke iz tablice vrstarobe ili poklon???
-            //    .ToListAsync();
-            //return View(promet);
+// SELECT
+// max(Naziv) as NazivRobe,
+// VrstaRobe,
+// sum(Cijena) AS UkupnoLovePoVrstiRobe
+// FROM dbo.Poklon
+// GROUP BY VrstaRobe
+            
+//TODO Sredi Lambda expression
+            /*
+            var promet = await _context.Poklons
+                .GroupBy(x=>x.VrstaRobe)
+                //TODO podatke iz tablice vrstarobe ili Poklon???
+                .ToListAsync();
+            */
 
-            // TODO Sredi raw SQL: 
-            // -------------------
-            //SELECT
-            //max(Naziv) AS NazivRobe,
-            //VrstaRobe,
-            //sum(Cijena) AS UkupnoPoVrstiRobe
-            //FROM dbo.Poklon
-            //GROUP BY VrstaRobe
 
+//TODO Sredi raw SQL
             var promet = _context.Poklons
-                .FromSqlRaw("SELECT max(Naziv) AS NazivRobe, VrstaRobe, sum(Cijena) AS UkupnoPoVrstiRobe FROM dbo.Poklon GROUP BY VrstaRobe")
-                .ToList();
+    .FromSqlRaw("SELECT max(Naziv) as NazivRobe, VrstaRobe, sum(Cijena) AS UkupnoLovePoVrstiRobe FROM dbo.Poklon GROUP BY VrstaRobe")
+    .ToList();
             return View(promet);
-
-        }        
+        }
 
         // GET: VrstaRobes/Details/5
         public async Task<IActionResult> Details(int? id)
