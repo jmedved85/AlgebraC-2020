@@ -26,6 +26,44 @@ namespace BazaPoklona.Controllers
             return View(await bazaPoklonaContext.ToListAsync());
         }
 
+        public IActionResult OstvareniPrometPoklon()
+        {
+            // return View(await _context.VrstaRobes.ToListAsync());
+
+            // SELECT
+            // max(Naziv) as NazivRobe,
+            // VrstaRobe,
+            // sum(Cijena) AS UkupnoLovePoVrstiRobe
+            // FROM dbo.Poklon
+            // GROUP BY VrstaRobe
+
+            //TODO Sredi Lambda expression
+
+            var promet = _context.Poklons
+                .Select(p => new { p.Naziv, p.VrstaRobe, p.Cijena})
+                //.Sum(p => p.Cijena)
+                //.GroupBy(p => p.VrstaRobe)
+                //TODO podatke iz tablice vrstarobe ili Poklon???
+                .ToList();
+
+            //var promet = (from p in _context.Poklons 
+            //              group p by p.VrstaRobe into vr
+            //              select vr.ToList());
+
+            //TODO Sredi raw SQL // NE MOGU => u MS Dokumentaciji piše: "The SQL query must return data for all properties of the entity type", a kada probam uvijek traži ID 
+            //var promet = _context.Poklons
+            //.FromSqlRaw("SELECT max(Naziv) as NazivRobe, VrstaRobe, sum(Cijena) AS UkupnoLovePoVrstiRobe FROM dbo.Poklon GROUP BY VrstaRobe")
+            //.ToList();
+
+            // GROUP BY IdPoklon, VrstaRobe
+
+            //var promet = _context.Poklons
+            //    .FromSqlRaw("SELECT * FROM dbo.Poklon").ToList();
+
+            return View(promet);
+            // return View(await _context.VrstaRobes.ToListAsync());
+        }
+
         // GET: Poklons/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -36,7 +74,7 @@ namespace BazaPoklona.Controllers
 
             var poklon = await _context.Poklons
                 .Include(p => p.VrstaRobeNavigation)
-                .FirstOrDefaultAsync(m => m.IdPoklon == id);
+                .FirstOrDefaultAsync(m => m.ID == id);
             if (poklon == null)
             {
                 return NotFound();
@@ -48,7 +86,7 @@ namespace BazaPoklona.Controllers
         // GET: Poklons/Create
         public IActionResult Create()
         {
-            ViewData["VrstaRobe"] = new SelectList(_context.VrstaRobes, "Id", "Naziv");
+            ViewData["VrstaRobe"] = new SelectList(_context.VrstaRobes, "ID", "Naziv");
             return View();
         }
 
@@ -57,7 +95,7 @@ namespace BazaPoklona.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdPoklon,Naziv,VrstaRobe,Kupljen")] Poklon poklon)
+        public async Task<IActionResult> Create([Bind("ID,Naziv,VrstaRobe,Kupljen")] Poklon poklon)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +103,7 @@ namespace BazaPoklona.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["VrstaRobe"] = new SelectList(_context.VrstaRobes, "Id", "Naziv", poklon.VrstaRobe);
+            ViewData["VrstaRobe"] = new SelectList(_context.VrstaRobes, "ID", "Naziv", poklon.VrstaRobe);
             return View(poklon);
         }
 
@@ -82,7 +120,7 @@ namespace BazaPoklona.Controllers
             {
                 return NotFound();
             }
-            ViewData["VrstaRobe"] = new SelectList(_context.VrstaRobes, "Id", "Naziv", poklon.VrstaRobe);
+            ViewData["VrstaRobe"] = new SelectList(_context.VrstaRobes, "ID", "Naziv", poklon.VrstaRobe);
             return View(poklon);
         }
 
@@ -117,9 +155,9 @@ namespace BazaPoklona.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdPoklon,Naziv,VrstaRobe,Kupljen")] Poklon poklon)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Naziv,VrstaRobe,Kupljen")] Poklon poklon)
         {
-            if (id != poklon.IdPoklon)
+            if (id != poklon.ID)
             {
                 return NotFound();
             }
@@ -133,7 +171,7 @@ namespace BazaPoklona.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PoklonExists(poklon.IdPoklon))
+                    if (!PoklonExists(poklon.ID))
                     {
                         return NotFound();
                     }
@@ -144,7 +182,7 @@ namespace BazaPoklona.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["VrstaRobe"] = new SelectList(_context.VrstaRobes, "Id", "Naziv", poklon.VrstaRobe);
+            ViewData["VrstaRobe"] = new SelectList(_context.VrstaRobes, "ID", "Naziv", poklon.VrstaRobe);
             return View(poklon);
         }
 
@@ -158,7 +196,7 @@ namespace BazaPoklona.Controllers
 
             var poklon = await _context.Poklons
                 .Include(p => p.VrstaRobeNavigation)
-                .FirstOrDefaultAsync(m => m.IdPoklon == id);
+                .FirstOrDefaultAsync(m => m.ID == id);
             if (poklon == null)
             {
                 return NotFound();
@@ -180,7 +218,7 @@ namespace BazaPoklona.Controllers
 
         private bool PoklonExists(int id)
         {
-            return _context.Poklons.Any(e => e.IdPoklon == id);
+            return _context.Poklons.Any(e => e.ID == id);
         }
     }
 }

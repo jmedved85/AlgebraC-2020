@@ -13,7 +13,7 @@ namespace BazaPoklona.Models
             Trgovinas = new HashSet<Trgovina>();
         }
 
-        public int Id { get; set; }
+        public int ID { get; set; }
         public string Naziv { get; set; }
 
         public virtual ICollection<Poklon> Poklons { get; set; } // kolekcija (lista) raznih poklona

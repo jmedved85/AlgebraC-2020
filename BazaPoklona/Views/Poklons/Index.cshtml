@@ -37,7 +37,7 @@
             <td>
                 @*  @Html.DisplayFor(modelItem => item.Kupljen) *@
                 <form asp-controller="Poklons" asp-action="Kupljen" method="post">
-                    <input type="checkbox" name="id" value="@item.IdPoklon" onchange="this.form.submit()" />
+                    <input type="checkbox" name="id" value="@item.ID" onchange="this.form.submit()" />
                 </form>
 
             </td>
@@ -45,9 +45,9 @@
                 @Html.DisplayFor(modelItem => item.VrstaRobeNavigation.Naziv)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.IdPoklon">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdPoklon">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdPoklon">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
             </td>
         </tr>
     }

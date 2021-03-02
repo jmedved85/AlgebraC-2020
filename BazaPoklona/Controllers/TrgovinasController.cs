@@ -35,7 +35,7 @@ namespace BazaPoklona.Controllers
 
             var trgovina = await _context.Trgovinas
                 .Include(t => t.VrstaRobeNavigation)
-                .FirstOrDefaultAsync(m => m.IdTrgovina == id);
+                .FirstOrDefaultAsync(m => m.ID == id);
             if (trgovina == null)
             {
                 return NotFound();
@@ -47,7 +47,7 @@ namespace BazaPoklona.Controllers
         // GET: Trgovinas/Create
         public IActionResult Create()
         {
-            ViewData["VrstaRobe"] = new SelectList(_context.VrstaRobes, "Id", "Naziv");
+            ViewData["VrstaRobe"] = new SelectList(_context.VrstaRobes, "ID", "Naziv");
             return View();
         }
 
@@ -81,7 +81,7 @@ namespace BazaPoklona.Controllers
             {
                 return NotFound();
             }
-            ViewData["VrstaRobe"] = new SelectList(_context.VrstaRobes, "Id", "Naziv", trgovina.VrstaRobe);
+            ViewData["VrstaRobe"] = new SelectList(_context.VrstaRobes, "ID", "Naziv", trgovina.VrstaRobe);
             return View(trgovina);
         }
 
@@ -90,9 +90,9 @@ namespace BazaPoklona.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdTrgovina,NazivTrgovina,VrstaRobe")] Trgovina trgovina)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,NazivTrgovina,VrstaRobe")] Trgovina trgovina)
         {
-            if (id != trgovina.IdTrgovina)
+            if (id != trgovina.ID)
             {
                 return NotFound();
             }
@@ -106,7 +106,7 @@ namespace BazaPoklona.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TrgovinaExists(trgovina.IdTrgovina))
+                    if (!TrgovinaExists(trgovina.ID))
                     {
                         return NotFound();
                     }
@@ -117,7 +117,7 @@ namespace BazaPoklona.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["VrstaRobe"] = new SelectList(_context.VrstaRobes, "Id", "Naziv", trgovina.VrstaRobe);
+            ViewData["VrstaRobe"] = new SelectList(_context.VrstaRobes, "ID", "Naziv", trgovina.VrstaRobe);
             return View(trgovina);
         }
 
@@ -131,7 +131,7 @@ namespace BazaPoklona.Controllers
 
             var trgovina = await _context.Trgovinas
                 .Include(t => t.VrstaRobeNavigation)
-                .FirstOrDefaultAsync(m => m.IdTrgovina == id);
+                .FirstOrDefaultAsync(m => m.ID == id);
             if (trgovina == null)
             {
                 return NotFound();
@@ -153,7 +153,7 @@ namespace BazaPoklona.Controllers
 
         private bool TrgovinaExists(int id)
         {
-            return _context.Trgovinas.Any(e => e.IdTrgovina == id);
+            return _context.Trgovinas.Any(e => e.ID == id);
         }
     }
 }

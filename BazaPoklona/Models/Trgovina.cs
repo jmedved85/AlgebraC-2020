@@ -7,7 +7,7 @@ namespace BazaPoklona.Models
 {
     public partial class Trgovina
     {
-        public int IdTrgovina { get; set; }
+        public int ID { get; set; }
         public string NazivTrgovina { get; set; }
         public int VrstaRobe { get; set; }
 

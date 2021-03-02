@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BazaPoklona.Models;
 
+
 namespace BazaPoklona.Controllers
 {
     public class VrstaRobesController : Controller
@@ -25,30 +26,37 @@ namespace BazaPoklona.Controllers
         }
 
         // GET: VrstaRobes
-        public async Task<IActionResult> OstvareniPromet()
+        [HttpGet]
+        public async Task<IActionResult> OstvareniPrometAsync()
         {
+            // return View(await _context.VrstaRobes.ToListAsync());
 
-// SELECT
-// max(Naziv) as NazivRobe,
-// VrstaRobe,
-// sum(Cijena) AS UkupnoLovePoVrstiRobe
-// FROM dbo.Poklon
-// GROUP BY VrstaRobe
-            
-//TODO Sredi Lambda expression
-            /*
-            var promet = await _context.Poklons
-                .GroupBy(x=>x.VrstaRobe)
-                //TODO podatke iz tablice vrstarobe ili Poklon???
-                .ToListAsync();
-            */
+            // SELECT
+            // max(Naziv) as NazivRobe,
+            // VrstaRobe,
+            // sum(Cijena) AS UkupnoLovePoVrstiRobe
+            // FROM dbo.Poklon
+            // GROUP BY VrstaRobe
 
+            //TODO Sredi Lambda expression
 
-//TODO Sredi raw SQL
+            //var promet = await _context.Poklons
+            //    .GroupBy(x => x.VrstaRobe)
+            //    //TODO podatke iz tablice vrstarobe ili Poklon???
+            //    .ToListAsync();
+
+            ////TODO Sredi raw SQL
             var promet = _context.Poklons
-    .FromSqlRaw("SELECT max(Naziv) as NazivRobe, VrstaRobe, sum(Cijena) AS UkupnoLovePoVrstiRobe FROM dbo.Poklon GROUP BY VrstaRobe")
-    .ToList();
+            .FromSqlRaw("SELECT max(Naziv) as NazivRobe, VrstaRobe, sum(Cijena) AS UkupnoLovePoVrstiRobe FROM dbo.Poklon GROUP BY VrstaRobe")
+            .ToList();
+
+            // GROUP BY IdPoklon, VrstaRobe
+
+            //var promet = _context.VrstaRobes
+            //    .FromSqlRaw("SELECT * FROM dbo.VrstaRobe").ToList();
+
             return View(promet);
+            // return View(await _context.VrstaRobes.ToListAsync());
         }
 
         // GET: VrstaRobes/Details/5
@@ -62,7 +70,7 @@ namespace BazaPoklona.Controllers
             var vrstaRobe = await _context.VrstaRobes
                 .Include(p => p.Poklons)
                 .Include(t => t.Trgovinas)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.ID == id);
             if (vrstaRobe == null)
             {
                 return NotFound();
@@ -82,7 +90,7 @@ namespace BazaPoklona.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Naziv")] VrstaRobe vrstaRobe)
+        public async Task<IActionResult> Create([Bind("ID,Naziv")] VrstaRobe vrstaRobe)
         {
             if (ModelState.IsValid)
             {
@@ -114,9 +122,9 @@ namespace BazaPoklona.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Naziv")] VrstaRobe vrstaRobe)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Naziv")] VrstaRobe vrstaRobe)
         {
-            if (id != vrstaRobe.Id)
+            if (id != vrstaRobe.ID)
             {
                 return NotFound();
             }
@@ -130,7 +138,7 @@ namespace BazaPoklona.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!VrstaRobeExists(vrstaRobe.Id))
+                    if (!VrstaRobeExists(vrstaRobe.ID))
                     {
                         return NotFound();
                     }
@@ -153,7 +161,7 @@ namespace BazaPoklona.Controllers
             }
 
             var vrstaRobe = await _context.VrstaRobes
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.ID == id);
             if (vrstaRobe == null)
             {
                 return NotFound();
@@ -175,7 +183,7 @@ namespace BazaPoklona.Controllers
 
         private bool VrstaRobeExists(int id)
         {
-            return _context.VrstaRobes.Any(e => e.Id == id);
+            return _context.VrstaRobes.Any(e => e.ID == id);
         }
     }
 }

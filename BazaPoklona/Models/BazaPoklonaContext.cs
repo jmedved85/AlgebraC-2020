@@ -36,7 +36,7 @@ namespace BazaPoklona.Models
 
             modelBuilder.Entity<Poklon>(entity =>
             {
-                entity.HasKey(e => e.IdPoklon)
+                entity.HasKey(e => e.ID)
                     .HasName("PK__Poklon__2D443D4D5AEE092A");
 
                 entity.ToTable("Poklon");
@@ -45,6 +45,8 @@ namespace BazaPoklona.Models
                     .IsRequired()
                     .HasMaxLength(40);
 
+                entity.Property(e => e.Cijena);
+                  
                 entity.HasOne(d => d.VrstaRobeNavigation)
                     .WithMany(p => p.Poklons)
                     .HasForeignKey(d => d.VrstaRobe)
@@ -54,7 +56,7 @@ namespace BazaPoklona.Models
 
             modelBuilder.Entity<Trgovina>(entity =>
             {
-                entity.HasKey(e => e.IdTrgovina)
+                entity.HasKey(e => e.ID)
                     .HasName("PK__Trgovina__A41276705583ABF8");
 
                 entity.ToTable("Trgovina");
