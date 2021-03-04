@@ -26,9 +26,13 @@ namespace BazaPoklona.Controllers
             return View(await bazaPoklonaContext.ToListAsync());
         }
 
-        public IActionResult OstvareniPrometPoklon()
+        public async Task<IActionResult> OstvareniPrometPoklonLINQ()
         {
             // return View(await _context.VrstaRobes.ToListAsync());
+
+            ////////////////
+            // SQL SERVER //
+            ////////////////
 
             // SELECT
             // max(Naziv) as NazivRobe,
@@ -37,31 +41,83 @@ namespace BazaPoklona.Controllers
             // FROM dbo.Poklon
             // GROUP BY VrstaRobe
 
-            //TODO Sredi Lambda expression
+            //////////////// 
+            // LINQ QUERY //
+            ////////////////
 
-            var promet = _context.Poklons
-                .Select(p => new { p.Naziv, p.VrstaRobe, p.Cijena})
-                //.Sum(p => p.Cijena)
-                //.GroupBy(p => p.VrstaRobe)
-                //TODO podatke iz tablice vrstarobe ili Poklon???
-                .ToList();
+            var dbPoklons = await _context.Poklons.ToListAsync();
 
-            //var promet = (from p in _context.Poklons 
-            //              group p by p.VrstaRobe into vr
-            //              select vr.ToList());
-
-            //TODO Sredi raw SQL // NE MOGU => u MS Dokumentaciji piše: "The SQL query must return data for all properties of the entity type", a kada probam uvijek traži ID 
-            //var promet = _context.Poklons
-            //.FromSqlRaw("SELECT max(Naziv) as NazivRobe, VrstaRobe, sum(Cijena) AS UkupnoLovePoVrstiRobe FROM dbo.Poklon GROUP BY VrstaRobe")
-            //.ToList();
-
-            // GROUP BY IdPoklon, VrstaRobe
-
-            //var promet = _context.Poklons
-            //    .FromSqlRaw("SELECT * FROM dbo.Poklon").ToList();
+            var promet = from p in dbPoklons
+                         orderby p.VrstaRobe
+                         group p by p.VrstaRobe
+                         into newData
+                         select new Poklon
+                         {
+                             VrstaRobe = newData.Key,
+                             Naziv = newData.Max(dbPoklons => dbPoklons.Naziv),
+                             Cijena = newData.Sum(x => x.Cijena)
+                         };
 
             return View(promet);
+            
+        }
+
+        public async Task<IActionResult> OstvareniPrometPoklonRawSQL()
+        {
             // return View(await _context.VrstaRobes.ToListAsync());
+
+            ////////////////
+            // SQL SERVER //
+            ////////////////
+
+            // SELECT
+            // max(Naziv) as NazivRobe,
+            // VrstaRobe,
+            // sum(Cijena) AS UkupnoLovePoVrstiRobe
+            // FROM dbo.Poklon
+            // GROUP BY VrstaRobe
+
+            /////////////////// 
+            // RAW SQL QUERY //
+            ///////////////////
+
+            // EXECUTE SQL RAW -InvalidOperationException: The model item passed into the ViewDataDictionary is of type 'System.Int32', 
+            // but this ViewDataDictionary instance requires a model item of type 'System.Collections.Generic.IEnumerable`1
+            //var promet = await _context.Database
+            //                .ExecuteSqlRawAsync(@"
+            //                SELECT MAX(dbo.Poklon.Naziv) as NazivRobe, MAX(dbo.VrstaRobe.Naziv) AS VrstaRobe, SUM(Cijena) AS UkupnaCijenaPoVrstiRobe 
+            //                FROM dbo.Poklon
+            //                JOIN dbo.VrstaRobe ON dbo.Poklon.VrstaRobe = dbo.VrstaRobe.ID
+            //                GROUP BY VrstaRobe");
+
+
+            //// FROM SQL RAW - InvalidOperationException: The required column 'ID' was not present in the results of a 'FromSql' operation.
+            //var promet = await _context.Poklons.FromSqlRaw(@"SELECT MAX(dbo.Poklon.Naziv) as NazivRobe, 
+            //                MAX(dbo.VrstaRobe.Naziv) AS VrstaRobe, SUM(Cijena) AS UkupnaCijenaPoVrstiRobe 
+            //                FROM dbo.Poklon
+            //                JOIN dbo.VrstaRobe ON dbo.Poklon.VrstaRobe = dbo.VrstaRobe.ID
+            //                GROUP BY VrstaRobe").ToListAsync();
+
+
+            //// STORED PROCEDURE - InvalidOperationException: The required column 'ID' was not present in the results of a 'FromSql' operation
+            //var promet = _context.Poklons
+            //    .FromSqlRaw("EXECUTE ostvareniPrometPoklonSP").ToList();
+
+
+            //FROM SQL RAW RADI - izvrši, ali izlista sve poklone
+            //var promet = await _context.OstvareniPrometPoklonModels.FromSqlRaw("SELECT * FROM dbo.Poklon").ToListAsync();     
+
+            //FROM SQL RAW NE RADI - SqlException: Ambiguous column name 'Naziv'.
+            //var promet = await _context.OstvareniPrometPoklonModels
+            //    .FromSqlRaw("SELECT MAX(Naziv) AS Naziv, MAX(VrstaRobe), SUM(Cijena) FROM dbo.Poklon JOIN dbo.VrstaRobe ON dbo.Poklon.VrstaRobe = dbo.VrstaRobe.ID GROUP BY VrstaRobe")
+            //    .ToListAsync();
+
+            //FROM SQL RAW NE RADI - ArgumentException: An item with the same key has already been added. Key: 
+            var promet = await _context.OstvareniPrometPoklonModels
+                .FromSqlRaw("SELECT MAX(Naziv) AS Naziv, MAX(VrstaRobe), SUM(Cijena) FROM dbo.Poklon GROUP BY VrstaRobe")
+                .ToListAsync();
+
+            return View(promet);
         }
 
         // GET: Poklons/Details/5
@@ -222,3 +278,29 @@ namespace BazaPoklona.Controllers
         }
     }
 }
+
+//POKUŠAJI
+
+//TODO Sredi Lambda expression
+
+//var promet = _context.Poklons
+//    .Select(p => new { p.Naziv, p.VrstaRobe, p.Cijena})
+//    //.Sum(p => p.Cijena)
+//    //.GroupBy(p => p.VrstaRobe)
+//    //TODO podatke iz tablice vrstarobe ili Poklon???
+//    .ToList();
+
+//var promet = (from p in _context.Poklons 
+//              group p by p.VrstaRobe into vr
+//              select vr.ToList());
+
+
+//TODO Sredi raw SQL // NE MOGU => u MS Dokumentaciji piše: "The SQL query must return data for all properties of the entity type", a kada probam uvijek traži ID 
+//var promet = _context.Poklons 
+//.FromSqlRaw("SELECT max(Naziv) as NazivRobe, VrstaRobe, sum(Cijena) AS UkupnoLovePoVrstiRobe FROM dbo.Poklon GROUP BY VrstaRobe")
+//.ToList();
+
+// GROUP BY IdPoklon, VrstaRobe
+
+//var promet = _context.Poklons
+//    .FromSqlRaw("SELECT * FROM dbo.Poklon").ToList();

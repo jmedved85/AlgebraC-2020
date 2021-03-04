@@ -1,0 +1,39 @@
+﻿@model IEnumerable<BazaPoklona.Models.OstvareniPrometPoklonModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Ostvareni Promet Poklon - Raw SQL</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Naziv)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VrstaRobe)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cijena)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Naziv)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VrstaRobe)
+                </td>
+                <td>
+                    <span class="badge badge-pill badge-success">@Html.DisplayFor(modelItem => item.Cijena)</span>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
